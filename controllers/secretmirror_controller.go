@@ -157,7 +157,10 @@ func (r *SecretMirrorReconciler) SetupWithManager(mgr ctrl.Manager) error {
 				ctx := context.Background()
 				ctx, cancel := context.WithCancel(ctx)
 				defer cancel()
-				mgr.GetCache().List(ctx, secretMirrorList)
+				err := mgr.GetCache().List(ctx, secretMirrorList)
+				if err != nil {
+					return []reconcile.Request{}
+				}
 				requests := []reconcile.Request{}
 				for _, item := range secretMirrorList.Items {
 					if item.Spec.FromNamespace == a.GetNamespace() && item.Name == a.GetName() {
