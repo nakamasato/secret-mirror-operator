@@ -17,7 +17,7 @@ This kubebuilder-based Kubernetes operator copies a `Secret` to another namespac
 ## Getting Started
 1. Install `secret-mirror-operator`.
     ```
-    kubectl apply -k github.com/bebit/secret-mirror-operator/config/default
+    kubectl apply -k github.com/nakamasato/secret-mirror-operator/config/default
     ```
 1. Create `src` and `dst` namespace.
     ```bash
@@ -32,7 +32,7 @@ This kubebuilder-based Kubernetes operator copies a `Secret` to another namespac
     kubectl apply -f config/samples/secret_v1alpha1_secretmirror.yaml
     ```
     ```yaml
-    apiVersion: secret.bebit.com/v1alpha1
+    apiVersion: secret.nakamasato.com/v1alpha1
     kind: SecretMirror
     metadata:
       name: secret
@@ -55,7 +55,7 @@ This kubebuilder-based Kubernetes operator copies a `Secret` to another namespac
       name: secret
       namespace: dst
       ownerReferences:
-      - apiVersion: secret.bebit.com/v1alpha1
+      - apiVersion: secret.nakamasato.com/v1alpha1
         blockOwnerDeletion: true
         controller: true
         kind: SecretMirror
