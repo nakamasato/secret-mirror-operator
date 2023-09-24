@@ -33,6 +33,7 @@ import (
 
 	secretv1alpha1 "github.com/nakamasato/secret-mirror-operator/api/v1alpha1"
 	"github.com/nakamasato/secret-mirror-operator/controllers"
+	metricsserver "sigs.k8s.io/controller-runtime/pkg/metrics/server"
 	//+kubebuilder:scaffold:imports
 )
 
@@ -67,8 +68,7 @@ func main() {
 
 	mgr, err := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
 		Scheme:                 scheme,
-		MetricsBindAddress:     metricsAddr,
-		Port:                   9443,
+		Metrics:                metricsserver.Options{BindAddress: metricsAddr},
 		HealthProbeBindAddress: probeAddr,
 		LeaderElection:         enableLeaderElection,
 		LeaderElectionID:       "b1e35536.nakamasato.com",

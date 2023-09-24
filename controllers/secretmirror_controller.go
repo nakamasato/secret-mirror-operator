@@ -32,7 +32,6 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/handler"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
-	"sigs.k8s.io/controller-runtime/pkg/source"
 
 	secretv1alpha1 "github.com/nakamasato/secret-mirror-operator/api/v1alpha1"
 )
@@ -151,10 +150,9 @@ func (r *SecretMirrorReconciler) SetupWithManager(mgr ctrl.Manager) error {
 		For(&secretv1alpha1.SecretMirror{}).
 		Owns(&v1.Secret{}).
 		Watches(
-			&source.Kind{Type: &v1.Secret{}},
-			handler.EnqueueRequestsFromMapFunc(func(a client.Object) []reconcile.Request {
+			&v1.Secret{},
+			handler.EnqueueRequestsFromMapFunc(func(ctx context.Context, a client.Object) []reconcile.Request {
 				secretMirrorList := &secretv1alpha1.SecretMirrorList{}
-				ctx := context.Background()
 				ctx, cancel := context.WithCancel(ctx)
 				defer cancel()
 				err := mgr.GetCache().List(ctx, secretMirrorList)
