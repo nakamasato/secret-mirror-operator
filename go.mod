@@ -2,7 +2,7 @@ module github.com/nakamasato/secret-mirror-operator
 
 go 1.21
 
-toolchain go1.22.5
+toolchain go1.22.6
 
 require (
 	github.com/onsi/ginkgo/v2 v2.19.1
